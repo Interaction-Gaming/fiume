@@ -1,12 +1,21 @@
-export class InvalidStatesError extends Error {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InvalidTransitionCondition = exports.InvalidStateIdError = exports.InvalidInitialStateError = exports.InvalidStatesError = void 0;
+exports.validateStates = validateStates;
+exports.validateHydration = validateHydration;
+class InvalidStatesError extends Error {
 }
-export class InvalidInitialStateError extends Error {
+exports.InvalidStatesError = InvalidStatesError;
+class InvalidInitialStateError extends Error {
 }
-export class InvalidStateIdError extends Error {
+exports.InvalidInitialStateError = InvalidInitialStateError;
+class InvalidStateIdError extends Error {
 }
-export class InvalidTransitionCondition extends Error {
+exports.InvalidStateIdError = InvalidStateIdError;
+class InvalidTransitionCondition extends Error {
 }
-export function validateStates(states) {
+exports.InvalidTransitionCondition = InvalidTransitionCondition;
+function validateStates(states) {
     if (!states || !Array.isArray(states) || states?.length < 1)
         throw new InvalidStatesError("States must be an array of at least 1 element");
     const initial = states.filter((s) => s.initial);
@@ -36,7 +45,7 @@ export function validateStates(states) {
         throw new InvalidTransitionCondition("State that are not final cannot have property onFinal");
     }
 }
-export function validateHydration(states, currentStateId) {
+function validateHydration(states, currentStateId) {
     validateStates(states);
     if (!states.some((s) => s.id === currentStateId)) {
         throw new InvalidStateIdError("No state id matches with the state id provided");

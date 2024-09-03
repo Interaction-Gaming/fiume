@@ -1,10 +1,15 @@
-import { validateHydration, validateStates } from "./validate.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StateMachine = exports.InvalidConstructor = exports.InvalidTransition = void 0;
+const validate_js_1 = require("./validate.js");
 const PREVENT_COSTRUCTOR_INSTANCE = Symbol("fiume.prevent-constructor");
-export class InvalidTransition extends Error {
+class InvalidTransition extends Error {
 }
-export class InvalidConstructor extends Error {
+exports.InvalidTransition = InvalidTransition;
+class InvalidConstructor extends Error {
 }
-export class StateMachine {
+exports.InvalidConstructor = InvalidConstructor;
+class StateMachine {
     id;
     context;
     #finished = false;
@@ -45,7 +50,7 @@ export class StateMachine {
     }
     static fromSnapshot(snapshot, states, sharedData) {
         const stateId = snapshot.stateId;
-        validateHydration(states, stateId);
+        (0, validate_js_1.validateHydration)(states, stateId);
         const stateMachineOptions = {
             id: snapshot.machineId,
             context: snapshot.context,
@@ -54,7 +59,7 @@ export class StateMachine {
         return new StateMachine(states, stateMachineOptions, PREVENT_COSTRUCTOR_INSTANCE, stateId);
     }
     static from(states, options) {
-        validateStates(states);
+        (0, validate_js_1.validateStates)(states);
         return new StateMachine(states, options, PREVENT_COSTRUCTOR_INSTANCE);
     }
     async send(event) {
@@ -142,3 +147,4 @@ export class StateMachine {
         this.#subscriptions.delete(id);
     }
 }
+exports.StateMachine = StateMachine;
