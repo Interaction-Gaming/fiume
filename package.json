@@ -22,31 +22,12 @@
     "state machine"
   ],
   "scripts": {
-    "prepublishOnly": "git push origin --follow-tags",
-    "prepare": "husky install",
-    "format": "biome format src test docs --write",
-    "lint": "biome check src test docs",
-    "pretest": "pnpm build",
     "prebuild": "rimraf dist",
     "build": "tsc -d",
     "test": "pnpm run \"/^test:.*/\"",
-    "test:javascript": "c8 --100 node --test",
-    "test:typescript": "tsd",
-    "markdownlint": "markdownlint '**/*.md' --fix --ignore node_modules --ignore docs",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "test:typescript": "tsd"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "@commitlint/cli": "^19.0.3",
-    "@commitlint/config-conventional": "^19.0.3",
-    "c8": "^10.1.2",
-    "husky": "^9.0.6",
-    "markdownlint-cli": "^0.41.0",
-    "@orama/orama": "2.0.23",
-    "@orama/plugin-vitepress": "2.0.23",
-    "@orama/searchbox": "1.0.0-rc53",
     "@types/node": "^22.0.0",
     "rimraf": "^6.0.1",
     "tsd": "^0.31.0",
