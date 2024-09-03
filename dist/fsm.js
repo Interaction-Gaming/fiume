@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StateMachine = exports.InvalidConstructor = exports.InvalidTransition = void 0;
 const validate_js_1 = require("./validate.js");
+const node_crypto_1 = __importDefault(require("node:crypto"));
 const PREVENT_COSTRUCTOR_INSTANCE = Symbol("fiume.prevent-constructor");
 class InvalidTransition extends Error {
 }
@@ -22,7 +26,7 @@ class StateMachine {
         if (symbol !== PREVENT_COSTRUCTOR_INSTANCE) {
             throw new InvalidConstructor("StateMachine must be created with `StateMachine.from`");
         }
-        this.id = options?.id || crypto.randomUUID();
+        this.id = options?.id || node_crypto_1.default.randomUUID();
         this.context = options?.context || {};
         this.#sharedData = options?.sharedData || {};
         this.#states = new Map(states.map((s) => [s.id, s]));
@@ -42,7 +46,7 @@ class StateMachine {
     }
     createSnapshot() {
         return {
-            snapshotId: crypto.randomUUID(),
+            snapshotId: node_crypto_1.default.randomUUID(),
             machineId: this.id,
             stateId: this.#current.id,
             context: structuredClone(this.context),
@@ -139,7 +143,7 @@ class StateMachine {
         await this.enter(destination, event);
     }
     subscribe(callback) {
-        const id = crypto.randomUUID();
+        const id = node_crypto_1.default.randomUUID();
         this.#subscriptions.set(id, callback);
         return id;
     }
