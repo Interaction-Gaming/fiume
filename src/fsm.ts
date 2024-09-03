@@ -9,6 +9,7 @@ import type {
 	SubscriptionCallback,
 } from "./state.js";
 import { validateHydration, validateStates } from "./validate.js";
+import crypto from 'node:crypto';
 
 const PREVENT_COSTRUCTOR_INSTANCE = Symbol("fiume.prevent-constructor");
 
