@@ -179,11 +179,12 @@ export class StateMachine<
 		event?: TEvent,
 	) {
 		this.#current = state;
+		let destinationId: string | undefined
 		let destination: State<TContext, TEvent, TSharedData> | undefined;
 
 		const g = state as TransitoryState;
 		if (g.transitionTo) {
-			const destinationId = await g.transitionTo({
+			destinationId = await g.transitionTo({
 				context: this.context,
 				sharedData: this.#sharedData,
 				event,
@@ -212,7 +213,7 @@ export class StateMachine<
 			return;
 		}
 
-		if (!destination) throw new InvalidTransition("Invalid destination node");
+		if (!destination) throw new InvalidTransition(`Invalid destination node - requested id ${destinationId}`);
 
 		await this.enter(destination, event);
 	}

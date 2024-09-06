@@ -109,10 +109,11 @@ class StateMachine {
     }
     async executeState(state, event) {
         this.#current = state;
+        let destinationId;
         let destination;
         const g = state;
         if (g.transitionTo) {
-            const destinationId = await g.transitionTo({
+            destinationId = await g.transitionTo({
                 context: this.context,
                 sharedData: this.#sharedData,
                 event,
@@ -139,7 +140,7 @@ class StateMachine {
             return;
         }
         if (!destination)
-            throw new InvalidTransition("Invalid destination node");
+            throw new InvalidTransition(`Invalid destination node - requested id ${destinationId}`);
         await this.enter(destination, event);
     }
     subscribe(callback) {
