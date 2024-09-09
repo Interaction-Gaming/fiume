@@ -130,7 +130,7 @@ export interface TransitoryState<
 	TSharedData = unknown,
 > {
 	id: StateIdentifier;
-	transitionTo: TransitionToHook<TContext, TEvent>;
+	transitionTo: TransitionToHook<TContext, TEvent, TSharedData>;
 	initial?: boolean;
 	autoTransition?: false;
 	/**
